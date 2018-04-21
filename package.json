@@ -1,0 +1,17 @@
+{
+  "name": "customerapp",
+  "version": "1.0.0",
+  "description": "Simple Customer Management App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "ejs": "^2.5.9",
+    "express": "*",
+    "express-validator": "^5.1.2"
+  },
+  "author": "Kushagra Agarwal",
+  "license": "ISC"
+}
