@@ -5,7 +5,7 @@ var path = require('path');
 var app = express();
 var expressValidator = require('express-validator')
 
-var amqp = require('amqplib/callback_api');
+var amqp = require('amqplib');
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
@@ -43,7 +43,6 @@ app.post('/users/add', function (req, res) {
             title: 'Customers',
             errors: errors
         });
-        console.log(errors)
     }
     else {
         console.log('Success');
@@ -56,21 +55,18 @@ app.post('/users/add', function (req, res) {
         }
         var q = 'q'
         var url = process.env.CLOUDAMQP_URL || "amqp://spbdyewq:0PfDzWG1GiXAe5pNVv4u6WPdl9qF60cf@eagle.rmq.cloudamqp.com/spbdyewq";
-        var open = require('amqplib').connect(url);
-        open.then(function (conn) {
-            var ok = conn.createChannel();
-            ok = ok.then(function (ch) {
-                ch.assertQueue(q);
-                ch.sendToQueue(q, new Buffer(JSON.stringify(newUser)))
-            });
-            return ok;
-        }).then(null, console.warn);
-        console.log(newUser)
-
-        // Consumer
+        amqp.connect(url).then(function (conn) {
+            return conn.createChannel().then(function (ch) {
+                var q = 'q';
+                var ok = ch.assertQueue(q);
+                return ok.then(function (_qok) {
+                    ch.sendToQueue(q, new Buffer(JSON.stringify(newUser)))
+                    return ch.close();
+                });
+            }).finally(function () { conn.close(); });
+        });
     }
 })
-
 app.listen(process.env.PORT || 3000, function () {
     // console.log("Server started on port 3000")
 })
