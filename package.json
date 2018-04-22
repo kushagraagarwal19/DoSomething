@@ -8,10 +8,12 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "amqplib": "^0.5.2",
     "body-parser": "*",
     "ejs": "^2.5.9",
     "express": "*",
-    "express-validator": "^5.1.2"
+    "express-validator": "^5.1.2",
+    "nodemailer": "^4.6.4"
   },
   "author": "Kushagra Agarwal",
   "license": "ISC"
