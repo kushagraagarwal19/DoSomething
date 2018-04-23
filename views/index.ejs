@@ -1,40 +1,54 @@
 <%include partials/header %>
-<h1>Add Customer</h1>
-<% if(errors != undefined){ %>
-    <ul>
-        <% errors.forEach(function(error){ %>
-            <li><%= error.msg %></li>
-        <% }) %>
-    </ul>
-<% } %>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=191551811054537&autoLogAppEvents=1';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+    <h1>Add Customer</h1>
+    <% if(errors != undefined){ %>
+        <ul>
+            <% errors.forEach(function(error){ %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }) %>
+        </ul>
+        <% } %>
+            <div class="container center">
+                <div class="card">
+                    <div class="row" style="padding: 20px">
+                        <form class="col s12" method="POST" action="/users/add">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input placeholder="First Name" id="first_name" type="text" class="validate" name="first_name">
+                                </div>
+                                <div class="input-field col s6">
+                                    <input id="birthday" type="text" class="datepicker" name="birthday">
+                                    <label for="birthday">Birthday</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="email" type="email" class="validate" name="email">
+                                    <label for="email">Email</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="cell" type="tel" class="validate" name="cell">
+                                    <label for="cell">Cell Number (optional)</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="password" type="password" class="validate" name="password">
+                                    <label for="password">Password</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
 
-<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
-<form method="POST" action="/users/add">
-    <label>First Name</label>
-    <input type="text" name="first_name">
-    <br>
-    <label>Birthday</label>
-    <input type="date" name="birthday">
-    <br>
-    <label>Email Name</label>
-    <input type="email" name="email">
-    <br>
-    <label>Cell Number</label>
-    <input type="number" name="cell">
-    <br>
-    <label>Password</label>
-    <input type="password" name="password">
-    <br>
-    <label>Submit</label>
-    <input type="submit" value="Submit">
-    <br>
-</form>
+            <%include partials/footer%>
