@@ -32,7 +32,7 @@ app.get('/', function (req, res) {
 
 
 const q = 'UserRegistrationQueue2';
-const url = (process.env.CLOUDAMQP_URL || 'amqp://spbdyewq:0PfDzWG1GiXAe5pNVv4u6WPdl9qF60cf@eagle.rmq.cloudamqp.com/spbdyewqT') + '?heartbeat=20';
+const url = (process.env.CLOUDAMQP_URL || 'amqp://spbdyewq:0PfDzWG1GiXAe5pNVv4u6WPdl9qF60cf@eagle.rmq.cloudamqp.com/spbdyewq') + '?heartbeat=20';
 // url += + '?heartbeat=20';
 
 // Form Submit Handler
