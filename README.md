@@ -1,4 +1,5 @@
 # DoSomething
+A NodeJS implementation of DoSomething login page. User will fill all the details and if successful, the details will get added to the RabbitMQ's queue. 
 
-https://www.raymondcamden.com/2017/02/08/using-social-login-with-passport-and-node/
-https://github.com/michaelkrukov/heroku-python-script
+## App URL
+The webapp is hosted on Heroku [here](https://damp-garden-35459.herokuapp.com/)

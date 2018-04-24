@@ -1,20 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-
-const app = express();
+const amqp = require('amqplib');
 const expressValidator = require('express-validator');
 
-const amqp = require('amqplib');
+// CloudAMQP Queue details
+const queue = 'UserRegistrationQueue';
+const url = (process.env.CLOUDAMQP_URL || 'amqp://spbdyewq:0PfDzWG1GiXAe5pNVv4u6WPdl9qF60cf@eagle.rmq.cloudamqp.com/spbdyewq') + '?heartbeat=20';
+
+const app = express();
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Global Variables
 app.use(function (req, res, next) {
   res.locals.errors = null;
   next();
 });
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
 
 // Body Parser Middleware
 app.use(bodyParser.json());
@@ -30,18 +33,13 @@ app.get('/', function (req, res) {
   });
 });
 
-
-const q = 'UserRegistrationQueue2';
-const url = (process.env.CLOUDAMQP_URL || 'amqp://spbdyewq:0PfDzWG1GiXAe5pNVv4u6WPdl9qF60cf@eagle.rmq.cloudamqp.com/spbdyewq') + '?heartbeat=20';
-// url += + '?heartbeat=20';
-
 // Form Submit Handler
 app.post('/users/add', function (req, res) {
   req.checkBody('first_name', 'First Name is required').notEmpty();
   req.checkBody('birthday', 'Birthday is required').notEmpty();
   req.checkBody('email', 'Email is required').notEmpty();
-  req.checkBody('cell', 'Mobile is required').notEmpty();
-  req.checkBody('password', 'Password is required').notEmpty();
+  req.checkBody('password', 'Password is required and should be of 6 characters').isLength({ min: 6 });
+  // req.checkBody('password', 'Should be 6 charalcters in length').notEmpty()
 
   const errors = req.validationErrors();
 
@@ -63,12 +61,11 @@ app.post('/users/add', function (req, res) {
 
     amqp.connect(url).then(function (conn) {
       return conn.createChannel().then(function (ch) {
-        const ok = ch.assertQueue(q);
+        const ok = ch.assertQueue(queue);
         return ok.then(function () {
-          ch.sendToQueue(q, Buffer.from(JSON.stringify(newUser)));
+          ch.sendToQueue(queue, Buffer.from(JSON.stringify(newUser)));
           return ch.close();
         }).catch(function (error) {
-          // console.log('error123');
           res.render('error', {
             title: 'Customers',
             errors: error,
@@ -79,8 +76,6 @@ app.post('/users/add', function (req, res) {
         res.render('added');
       });
     }).catch(function (error) {
-      // console.log('error345');
-      // console.log(error);
       res.render('error', {
         title: 'Customers',
         errors: error,
