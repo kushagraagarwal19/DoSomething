@@ -4,7 +4,7 @@
             <h2>Add User</h2>
         </div>
     </div>
-    <% if(errors != undefined){ %>
+    <!-- <% if(errors != undefined){ %>
         <ul>
             <% errors.forEach(function(error){ %>
                 <li>
@@ -12,47 +12,79 @@
                 </li>
                 <% }) %>
         </ul>
-        <% } %>
-            <div class="container center">
-                <div class="card">
-                    <div class="row" style="padding: 20px">
-                        <form class="col s12" method="POST" action="/users/add">
-                            <div class="row">
-                                <div class="input-field col s6">
-                                    <input placeholder="First Name" id="first_name" type="text" class="validate" name="first_name">
-                                </div>
-                                <div class="input-field col s6">
-                                    <input id="birthday" type="text" class="datepicker" name="birthday">
-                                    <label for="birthday">Birthday</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input id="email" type="email" class="validate" name="email">
-                                    <label for="email">Email</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input id="cell" type="tel" class="validate" name="cell">
-                                    <label for="cell">Cell Number (optional)</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input id="password" type="password" class="validate" name="password">
-                                    <label for="password">Password</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                                    <i class="material-icons right">send</i>
-                                </button>
-                            </div>
-
-                        </form>
+        <% } %> -->
+    <div class="container center">
+        <div class="card">
+            <div class="row" style="padding: 20px">
+                <form class="col s12" method="POST" action="/users/add" onsubmit="return validate();">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="first_name" type="text" class="validate" name="first_name" required>
+                            <label for="first_name">First Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="birthday" type="text" class="datepicker" name="birthday" readonly>
+                            <label for="birthday">Birthday</label>
+                            <span id="birthday-error" style="display:none;color:red;float:left;position:relative;top:-0.5em">Birth date is required</span>
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="email" type="email" class="validate" name="email" required>
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="cell" type="number" class="validate" name="cell" pattern="\d+" placeholder="optional" />
+                            <label for="cell">Cell Number</label>
+                            <span id="cell-error" style="display: none;color:red;float:left;position:relative;top:-0.5em">Only numbers of 10 digits accepted</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="password" type="password" class="validate" name="password" required placeholder="Minimum 6 characters">
+                            <label for="password">Password</label>
+                            <span id="password-error" style="display: none;color:red;float:left;position:relative;top:-0.5em">Password should be of 6 characters!</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
+    <script>
+        function validate() {
+            var password = $("#password").val();
+            if (password.length < 6) {
+                $("#password-error").show();
+                return false;
+            } else {
+                $("#password-error").hide();
+            }
+            var birthday = $("#birthday").val();
+            console.log(birthday.length);
+            if (birthday.length == 0) {
+                console.log("success");
+                $("#birthday-error").show();
+                return false;
+            } else {
+                $("#birthday-error").hide();
+            }
+            var cell = $("#cell").val();
+            console.log(birthday.length);
+            if (cell.length != 0 && cell.length != 10) {
+                $("#cell-error").show();
+                return false
+            } else {
+                $("#cell-error").hide();
+            }
+            return true;
+        }
 
-            <%include partials/footer%>
+    </script>
+    <%include partials/footer%>
