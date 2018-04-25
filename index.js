@@ -4,10 +4,10 @@ const path = require('path');
 const amqp = require('amqplib');
 
 // CloudAMQP Queue details
-// const queue = process.env.QUEUE_NAME;
-const queue = 'UserRegistrationQueue';
+const queue = process.env.QUEUE_NAME;
+// const queue = 'UserRegistrationQueue';
 
-const url = process.env.CLOUDAMQP_URL  + process.env.HEARTBEAT;
+const url = process.env.CLOUDAMQP_URL + process.env.HEARTBEAT;
 // const url = 'amqp://spbdyewq:0PfDzWG1GiXAe5pNVv4u6WPdl9qF60cf@eagle.rmq.cloudamqp.com/spbdyewq?heartbeat=20';
 
 const app = express();
@@ -16,10 +16,10 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Global Variables
-app.use(function (req, res, next) {
-  res.locals.errors = null;
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.locals.errors = null;
+//   next();
+// });
 
 // Body Parser Middleware
 app.use(bodyParser.json());
