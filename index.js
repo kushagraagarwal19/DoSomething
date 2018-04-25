@@ -4,11 +4,11 @@ const path = require('path');
 const amqp = require('amqplib');
 
 // CloudAMQP Queue details
+// UserRegistrationQueue
 const queue = process.env.QUEUE_NAME;
-// const queue = 'UserRegistrationQueue';
 
+// amqp://spbdyewq:0PfDzWG1GiXAe5pNVv4u6WPdl9qF60cf@eagle.rmq.cloudamqp.com/spbdyewq?heartbeat=20
 const url = process.env.CLOUDAMQP_URL + process.env.HEARTBEAT;
-// const url = 'amqp://spbdyewq:0PfDzWG1GiXAe5pNVv4u6WPdl9qF60cf@eagle.rmq.cloudamqp.com/spbdyewq?heartbeat=20';
 
 const app = express();
 

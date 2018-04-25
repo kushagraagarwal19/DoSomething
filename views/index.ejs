@@ -1,11 +1,14 @@
 <%include partials/header %>
-    <div class="container center">
-        <div class="card">
-            <h2>Add User</h2>
+    <nav class="deep-purple lighten-3">
+        <div class="container center" >
+            <div class="nav-wrapper"style="padding: 5px">
+                <h4>Add User</h4>
+            </div>
         </div>
-    </div>
+    </nav>
+
     <div class="container center">
-        <div class="card">
+        <div class="card-panel hoverable">
             <div class="row" style="padding: 20px">
                 <form class="col s12" method="POST" action="/users/add" onsubmit="return validate();">
                     <div class="row">
@@ -14,7 +17,7 @@
                             <label for="first_name">First Name</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="birthday" type="text" class="datepicker" name="birthday" readonly>
+                            <input id="birthday" type="text" class="datepicker " name="birthday" readonly>
                             <label for="birthday">Birthday</label>
                             <span id="birthday-error" style="display:none;color:red;float:left;position:relative;top:-0.5em">Birth date is required</span>
                         </div>
@@ -29,7 +32,7 @@
                         <div class="input-field col s12">
                             <input id="cell" type="number" class="validate" name="cell" pattern="\d+" placeholder="optional" />
                             <label for="cell">Cell Number</label>
-                            <span id="cell-error" style="display: none;color:red;float:left;position:relative;top:-0.5em">Only numbers of 10 digits accepted</span>
+                            <span id="cell-error" style="display: none;color:red;float:left;position:relative;top:-0.5em">Should be of 10 digits!</span>
                         </div>
                     </div>
                     <div class="row">
