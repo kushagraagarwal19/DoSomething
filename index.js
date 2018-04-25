@@ -15,12 +15,6 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Global Variables
-// app.use(function (req, res, next) {
-//   res.locals.errors = null;
-//   next();
-// });
-
 // Body Parser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,21 +28,6 @@ app.get('/', function (req, res) {
 
 // Form Submit Handler
 app.post('/users/add', function (req, res) {
-  // req.checkBody('first_name', 'First Name is required').notEmpty();
-  // req.checkBody('birthday', 'Birthday is required').notEmpty();
-  // req.checkBody('email', 'Email is required').notEmpty();
-  // req.checkBody('password', 'Password is required and should be of 6 characters').isLength({ min: 6 });
-  // // req.checkBody('password', 'Should be 6 charalcters in length').notEmpty()
-
-  // const errors = req.validationErrors();
-
-  // if (errors) {
-  //   res.render('index', {
-  //     title: 'Customers',
-  //     errors: errors,
-  //   });
-  // }
-  // else {
   console.log('Success for form validation');
   const newUser = {
     firstName: req.body.first_name,
